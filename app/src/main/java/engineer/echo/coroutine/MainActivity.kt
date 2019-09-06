@@ -3,11 +3,13 @@ package engineer.echo.coroutine
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
 import engineer.echo.coroutine.cmpts.ApiManager
 import engineer.echo.coroutine.cmpts.bean.WeatherResp
 import engineer.echo.coroutine.cmpts.extendx.TAG
 import engineer.echo.coroutine.cmpts.extendx.weatherUrl
+import engineer.echo.coroutine.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -20,9 +22,11 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         getWeather()
     }
 
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 ApiManager.get("beijing".weatherUrl(), WeatherResp::class.java)
             }
             val weather = result.await()
+            binding.weather = weather?.date
             Log.d(this@MainActivity.TAG, "weather:${weather?.status}")
         }
     }
