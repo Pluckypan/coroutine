@@ -29,4 +29,12 @@ val Any.TAG: String
 fun String.weatherUrl(): String =
     "http://api.map.baidu.com/telematics/v3/weather?output=json&ak=${C.AK}&&location=$this"
 
+/**
+ * 当前环境线程
+ */
+fun Any.currentThread(): String = Thread.currentThread().name
+
+/**
+ * json 转换
+ */
 inline fun <reified T> Gson.convertTo(json: String): T = fromJson(json, T::class.java)

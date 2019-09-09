@@ -1,10 +1,10 @@
 package engineer.echo.coroutine
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
 import engineer.echo.coroutine.cmpts.ApiManager
 import engineer.echo.coroutine.cmpts.bean.WeatherResp
 import engineer.echo.coroutine.cmpts.extendx.TAG
@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.apply {
+            date = MutableLiveData()
+            // setup lifecycleOwner for LiveData
+            lifecycleOwner = this@MainActivity
+        }
         getWeather()
     }
 
@@ -36,7 +41,9 @@ class MainActivity : AppCompatActivity() {
                 ApiManager.get("beijing".weatherUrl(), WeatherResp::class.java)
             }
             val weather = result.await()
-            binding.weather = weather?.date
+            binding.city = weather?.results?.firstOrNull()?.currentCity
+            // in work thread,so post value
+            binding.date?.postValue(weather?.date)
             Log.d(this@MainActivity.TAG, "weather:${weather?.status}")
         }
     }

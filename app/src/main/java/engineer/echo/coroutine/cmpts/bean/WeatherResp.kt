@@ -13,5 +13,6 @@ import kotlinx.android.parcel.Parcelize
 data class WeatherResp(
     val error: Int,
     val status: String,
-    val date: String
+    val date: String,
+    val results: List<Weather>
 ) : Parcelable
