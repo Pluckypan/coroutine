@@ -7,3 +7,4 @@
 - https://blog.csdn.net/c10WTiybQ1Ye3/article/details/94415256
 - https://www.cnblogs.com/happyxiaoyu02/p/11007815.html
 - https://github.com/samwangds/KotlinCoroutine
+- https://mp.weixin.qq.com/s/IVzraZtLMEF4MnsuNskY_w?utm_source=androidweekly.io&utm_medium=website
